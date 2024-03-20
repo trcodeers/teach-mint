@@ -5,7 +5,6 @@ import OrderCard from './components/orderCard';
 
 function App() {
 
-
   const [orders, setOrders] = useState(null)
 
   useEffect(() => {
@@ -119,24 +118,6 @@ function App() {
 
       updateStatus(updatedOrder, 'placed', 'making')
 
-      // // update localstorage
-      // const storedOrdered = JSON.parse(localStorage.getItem('orders'))
-      // const orderIndex = storedOrdered.findIndex((el) => el.id === order.id)
-      // storedOrdered[orderIndex] = updatedOrder
-      // localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
-      
-      // // update local orders data -> Preventing recalculating everything
-      // const updatedPlacedOrders = orders.placed.filter((el) => el.id !== order.id) 
-      // const updatedMakingOrders = [ updatedOrder, ...orders.making ]
-      // setOrders((prev) => {
-      //   return {
-      //     ...prev,
-      //     placed: updatedPlacedOrders,
-      //     making: updatedMakingOrders
-      //   }
-
-      // })
-
     }
     else if (status === 'making') {
       const updatedOrder = {
@@ -183,10 +164,6 @@ function App() {
 
 
   }
-
-  useEffect(()=>{
-    console.log(orders)
-  }, [orders])
 
   return (
     <>
