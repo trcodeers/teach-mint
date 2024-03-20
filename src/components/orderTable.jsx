@@ -56,7 +56,7 @@ const OrderTable = (props) => {
 
             <tfoot>
                 <tr>
-                    <td colspan="1" className="px-4 py-2 border font-bold">
+                    <td colspan="1" className="px-4 py-2 border font-bold text-end">
                         Total order delivered
                     </td>
                     <td colspan="2" className="px-4 py-2 border font-bold">
