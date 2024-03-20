@@ -138,8 +138,33 @@ function App() {
   }
 
   const onClickCancel = (order) => {
-    console.log(order)
+    if(order.status !== 'ready' && order.status !== 'picked'){
+      // Remove from local storage
+        const existingOrders = JSON.parse(localStorage.getItem('orders'))
+        const updatedOrders = existingOrders.filter((el) => el.id !== order.id)
+        localStorage.setItem('orders', JSON.stringify(updatedOrders))
 
+      // Remove from local state 
+      if(order.status === 'placed'){
+        
+        const updatedPlacedOrder = orders.placed.filter((el) => el.id !== order.id)
+        setOrders({
+          ...orders,
+          placed: updatedPlacedOrder
+        })
+
+      } 
+
+      else if(order.status === 'making'){
+        
+        const updatedMakingOrder = orders.making.filter((el) => el.id !== order.id)
+        setOrders({
+          ...orders,
+          making: updatedMakingOrder
+        })
+      
+      }
+    }
   }
 
   const updateStatus = (updatedOrder, oldStatus, newStatus) =>{
@@ -319,9 +344,10 @@ function App() {
                   <td className="px-4 py-2 border text-center">{el.status}</td>
                   <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.seconds} sec</td>
                   <td className="px-4 py-2 border text-center">
-                    <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
+                    {(el.status !== 'ready' && el.status !== 'picked') && <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
                       Cancel
                     </button>
+                    }
                   </td>
                 </tr>
               })}
