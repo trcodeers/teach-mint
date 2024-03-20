@@ -1,7 +1,18 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 import { useForm } from "react-hook-form";
 
 function App() {
+
+  const [orders, setOrders] = useState([])
+
+  useEffect(()=>{
+    const existingOrders = localStorage.getItem('orders')
+    if(existingOrders){
+      setOrders([ ...JSON.parse(existingOrders) ])
+    }
+  }, [])
+
 
   const {
     register,
@@ -19,8 +30,32 @@ function App() {
 
   const onSubmit = (data) => {
     console.log(data)
-    // reset();
+    const newOrder = {
+      id: (orders.length + 1),
+      status: 'placed',
+      createdAt: Date.now(),
+      ...data
+    }
+    const updatedOrders = [ newOrder, ...orders ]
+    localStorage.setItem('orders',(JSON.stringify([ ...updatedOrders ])))
+    setOrders([ ...updatedOrders ])
+    reset();
   };
+
+  function getTimeDifference(startTimeStamp, endTimeStamp) {
+    // Convert timestamps to milliseconds
+    const startTime = new Date(startTimeStamp).getTime();
+    const endTime = new Date(endTimeStamp).getTime();
+
+    // Calculate the difference in milliseconds
+    let timeDifference = endTime - startTime;
+
+    // Calculate minutes and seconds
+    const minutes = Math.floor(timeDifference / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    return { minutes, seconds };
+  }
 
   return (
     <div>
