@@ -193,6 +193,8 @@ function App() {
   return (
     <>
 
+    <div className='flex flex-col items-center'>
+
       <div className='flex flex-col items-center'>
         <OrderForm
           onSubmit={onSubmit}
@@ -200,67 +202,70 @@ function App() {
       </div>
 
     
-      <div className="flex flex-row justify-center">
-        
-        <div className="w-60 border border-gray-500">
-          <div className="text-center pb-8 font-bold">Placed</div>
-          <div className="flex  flex-col items-center gap-6">
-            {
-              orders?.placed?.map((el) => {
-                return <OrderCard
-                  order={el}
-                  onClickNext={onClickNext}
-                />
-              })
-            }
+      <div className='flex flex-col justify-center items-start '>
+        <div className='text-lg'>Pizza Stage Section</div>
+        <div className="flex flex-row justify-center">
+          <div className="w-60 border border-gray-500">
+            <div className="text-center pb-8 font-bold">Placed</div>
+            <div className="flex  flex-col items-center gap-6  pb-4">
+              {
+                orders?.placed?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                    onClickNext={onClickNext}
+                  />
+                })
+              }
+            </div>
           </div>
-        </div>
 
-        <div className="w-60 border border-gray-500">
-          <div className="text-center pb-8 font-bold">Making</div>
-          <div className="flex  flex-col items-center gap-6">
-            {
-              orders?.making?.map((el) => {
-                return <OrderCard
-                  order={el}
-                  onClickNext={onClickNext}
-                />
-              })
-            }
+          <div className="w-60 border border-gray-500">
+            <div className="text-center pb-8 font-bold">Making</div>
+            <div className="flex  flex-col items-center gap-6 pb-4">
+              {
+                orders?.making?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                    onClickNext={onClickNext}
+                  />
+                })
+              }
+            </div>
           </div>
-        </div>
 
-        <div className="w-60 border border-gray-500">
-          <div className="text-center pb-8 font-bold">Ready</div>
-          <div className="flex  flex-col items-center gap-6">
-            {
-              orders?.ready?.map((el) => {
-                return <OrderCard
-                  order={el}
-                  onClickNext={onClickNext}
-                />
-              })
-            }
+          <div className="w-60 border border-gray-500">
+            <div className="text-center pb-8 font-bold">Ready</div>
+            <div className="flex  flex-col items-center gap-6 pb-4">
+              {
+                orders?.ready?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                    onClickNext={onClickNext}
+                  />
+                })
+              }
+            </div>
           </div>
-        </div>
 
-        <div className="w-60 border border-gray-500">
-          <div className="text-center pb-8 font-bold">Picked</div>
-          <div className="flex  flex-col items-center gap-6">
-            {
-              orders?.picked?.map((el) => {
-                return <OrderCard
-                  order={el}
-                  onClickNext={onClickNext}
-                />
-              })
-            }
+          <div className="w-60 border border-gray-500">
+            <div className="text-center pb-8 font-bold">Picked</div>
+            <div className="flex  flex-col items-center gap-6 pb-4">
+              {
+                orders?.picked?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                    onClickNext={onClickNext}
+                  />
+                })
+              }
+            </div>
           </div>
         </div>
       </div>
 
-      <div>
-        <div className="overflow-x-auto flex justify-center mt-32 mb-32"> 
+      <div className='flex flex-col items-start'>
+        <div className='text-lg'>Main Section</div>
+        <div className="flex justify-center   mb-32"> 
           {orders && <OrderTable
             allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
             deliveredOrdersNo={orders ? orders.picked.length : 0}
@@ -268,7 +273,9 @@ function App() {
           />}
         </div>
       </div>
-
+      
+    </div>
+    
     </>
 
   );
