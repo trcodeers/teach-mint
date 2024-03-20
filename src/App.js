@@ -77,12 +77,15 @@ function App() {
   });
 
   const onSubmit = (data) => {
-    const existingLimitingOrders = orders ? [...orders.placed, ...orders.making] : null
-    const newOrderNo = existingLimitingOrders ? (existingLimitingOrders.length + 1) : 0
-    if(newOrderNo > 10){
+    const limitingOrders = orders ? [...orders.placed, ...orders.making] : []
+    if(limitingOrders.length > 10){
       console.log('Not taking any order for now')
       return
     }
+    const existingItems = localStorage.getItem('orders')
+
+    
+    const newOrderNo = existingItems ? (JSON.parse(existingItems).length + 1) : 1
     const newOrder = {
       id: newOrderNo,
       status: 'placed',
