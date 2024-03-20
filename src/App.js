@@ -200,8 +200,7 @@ function App() {
           onSubmit={onSubmit}
         />
       </div>
-
-    
+ 
       <div className='flex flex-col justify-center items-start '>
         <div className='text-lg'>Pizza Stage Section</div>
         <div className="flex flex-row justify-center">
