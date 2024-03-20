@@ -21,7 +21,7 @@ function App() {
 
       parsedOrders.forEach(element => {
         const { status } = element
-        const timeDiff = getTimeDifference(element.createdAt, Date.now())
+        const timeDiff = getTimeDifference(element.placedAt, Date.now())
 
         console.log(timeDiff)
         const updatedElement = { ...element, timeDiff }
@@ -86,7 +86,7 @@ function App() {
     const newOrder = {
       id: newOrderNo,
       status: 'placed',
-      createdAt: Date.now(),
+      placedAt: Date.now(),
       ...data
     }
     
@@ -125,7 +125,8 @@ function App() {
       
       const updatedOrder = {
         ...order,
-        status: 'making'
+        status: 'making',
+        makingAt: Date.now()
       }
 
       updateStatus(updatedOrder, 'placed', 'making')
@@ -134,14 +135,16 @@ function App() {
     else if (status === 'making') {
       const updatedOrder = {
         ...order,
-        status: 'ready'
+        status: 'ready',
+        readyAt: Date.now()
       }
       updateStatus(updatedOrder, 'making', 'ready')
     }
     else if (status === 'ready') {
       const updatedOrder = {
         ...order,
-        status: 'picked'
+        status: 'picked',
+        pickedAt: Date.now()
       }
       updateStatus(updatedOrder, 'ready', 'picked')
 
