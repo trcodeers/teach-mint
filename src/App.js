@@ -109,7 +109,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className='flex justify-center'>
         <form
           className="bg-white rounded mb-4 p-6"
           onSubmit={handleSubmit(onSubmit)}
@@ -165,10 +165,10 @@ function App() {
 
             <div>
               <button
-                className="bg-red-500 w-[80px] text-center text-white py-2 px-2 rounded "
+                className="bg-red-500 w-[100px] text-center text-white py-2 px-2 rounded "
                 type="submit"
               >
-                Save
+                Create
               </button>
             </div>
           </div>
