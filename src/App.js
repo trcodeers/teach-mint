@@ -22,7 +22,7 @@ function App() {
       parsedOrders.forEach(element => {
         const { status } = element
         const timeDiff = getTimeDifference(element.createdAt, Date.now())
-        
+
         console.log(timeDiff)
         const updatedElement = { ...element, timeDiff }
         console.log(updatedElement)
@@ -117,7 +117,7 @@ function App() {
 
             <div className="relative inline-block text-left">
               <label>Size</label>
-              <select 
+              <select
                 {...register("size", { required: "Title is required" })}
                 className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               >
@@ -134,11 +134,11 @@ function App() {
 
             <div className="relative inline-block text-left">
               <label>Type</label>
-              <select 
+              <select
                 {...register("type", { required: "Title is required" })}
                 className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option value='veg'>Veg</option>
-                <option value='non-veg'>Non Veg</option>              
+                <option value='non-veg'>Non Veg</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -149,7 +149,7 @@ function App() {
 
             <div className="relative inline-block text-left">
               <label>Base</label>
-              <select 
+              <select
                 {...register("base", { required: "Title is required" })}
                 className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option value='thick'>Thick</option>
@@ -171,7 +171,7 @@ function App() {
               </button>
             </div>
           </div>
-      
+
         </form>
       </div>
 
@@ -237,6 +237,48 @@ function App() {
 
 
       </div>
+
+      <div>
+        <div class="overflow-x-auto flex justify-center mt-32 mb-32">
+          <table class="table-auto w-[70%] border border-collapse">
+            <thead>
+              <tr>
+                <th class="px-4 py-2 border">Order id</th>
+                <th class="px-4 py-2 border">Stage</th>
+                <th class="px-4 py-2 border">Times Spent</th>
+                <th class="px-4 py-2 border">Action</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              
+              <tr>
+                <td class="px-4 py-2 border text-center">Data 1</td>
+                <td class="px-4 py-2 border text-center">Data 2</td>
+                <td class="px-4 py-2 border text-center">Data 3</td>
+                <td class="px-4 py-2 border text-center">
+                  <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            
+            <tfoot>
+              <tr>
+                <td colspan="1" class="px-4 py-2 border font-bold">
+                  Total order delivered
+                </td>
+                <td colspan="2" class="px-4 py-2 border font-bold">
+                  100
+                </td>
+              </tr>
+            </tfoot>
+
+          </table>
+        </div>
+      </div>
+
     </>
 
   );
