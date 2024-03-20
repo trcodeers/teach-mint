@@ -7,6 +7,7 @@ import OrderForm from './components/orderForm';
 function App() {
 
   const [orders, setOrders] = useState(null)
+  const [totalOrders, setTotalOrders] = useState(0)
 
   useEffect(() => {
     const existingOrders = localStorage.getItem('orders')
@@ -19,6 +20,7 @@ function App() {
     if (existingOrders) {
 
       const parsedOrders = JSON.parse(existingOrders)
+      setTotalOrders(parsedOrders.length)
 
       parsedOrders.forEach(element => {
         const { status } = element
@@ -82,7 +84,7 @@ function App() {
     const existingOrders = localStorage.getItem('orders')
     const updatedOrders = [newOrder, ...(existingOrders ? JSON.parse(existingOrders) : [])]
     localStorage.setItem('orders', (JSON.stringify([...updatedOrders])))
-    
+    setTotalOrders(updatedOrders.length)
     // Set the local state
     setOrders({
       ...orders,
@@ -145,7 +147,7 @@ function App() {
         const existingOrders = JSON.parse(localStorage.getItem('orders'))
         const updatedOrders = existingOrders.filter((el) => el.id !== order.id)
         localStorage.setItem('orders', JSON.stringify(updatedOrders))
-
+        setTotalOrders(updatedOrders.length)
       // Remove from local state 
       if(order.status === 'placed'){
         
@@ -201,7 +203,7 @@ function App() {
         />
       </div>
  
-      <div className='flex flex-col justify-center items-start '>
+      {totalOrders > 0 && <div className='flex flex-col justify-center items-start '>
         <div className='text-lg'>Pizza Stage Section</div>
         <div className="flex flex-row justify-center">
           <div className="w-60 border border-gray-500">
@@ -260,9 +262,9 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
 
-      <div className='flex flex-col items-start'>
+      {totalOrders > 0 && <div className='flex flex-col items-start'>
         <div className='text-lg'>Main Section</div>
         <div className="flex justify-center   mb-32"> 
           {orders && <OrderTable
@@ -271,8 +273,11 @@ function App() {
             onClickCancel={onClickCancel}
           />}
         </div>
-      </div>
+      </div>}
       
+      {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
+        No Order placed 
+      </div>}
     </div>
     
     </>
