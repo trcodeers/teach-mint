@@ -23,7 +23,7 @@ const OrderForm = (props) => {
     return (
         <form
             className="bg-white rounded mb-4 p-6"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(() => {onSubmit(); reset()})}
         >
             <div className='flex flex-row gap-9'>
 

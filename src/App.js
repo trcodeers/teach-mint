@@ -266,7 +266,7 @@ function App() {
 
       {totalOrders > 0 && <div className='flex flex-col items-start'>
         <div className='text-lg'>Main Section</div>
-        <div className="flex justify-center   mb-32"> 
+        <div className="flex     mb-32"> 
           {orders && <OrderTable
             allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
             deliveredOrdersNo={orders ? orders.picked.length : 0}

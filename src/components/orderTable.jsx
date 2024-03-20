@@ -25,7 +25,7 @@ const OrderTable = (props) => {
     }
 
     return (
-        <table className="table-auto w-full border border-collapse">
+        <table className="  border border-collapse">
 
             <thead>
                 <tr>
