@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { useForm } from "react-hook-form";
 import OrderCard from './components/orderCard';
 import OrderTable from './components/orderTable';
+import OrderForm from './components/orderForm';
 
 function App() {
 
@@ -62,21 +62,6 @@ function App() {
     setOrders({ ...orderFormat })
   }, [])
 
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      type: "",
-      size: "",
-      base: "",
-    },
-  });
-
   const onSubmit = (data) => {
     const limitingOrders = orders ? [...orders.placed, ...orders.making] : []
     if(limitingOrders.length > 10){
@@ -104,7 +89,7 @@ function App() {
       placed: [ newOrder, ...(orders ? orders.placed : []) ]
     })
 
-    reset();
+    // reset();
   };
 
   function getTimeDifference(startTimeStamp, endTimeStamp) {
@@ -123,7 +108,6 @@ function App() {
   }
 
   const onClickNext = (order) => {
-    console.log(order)
     const { status } = order
     if (status === 'placed') {
       
@@ -151,7 +135,6 @@ function App() {
         pickedAt: Date.now()
       }
       updateStatus(updatedOrder, 'ready', 'picked')
-
     }
  
   }
@@ -194,9 +177,8 @@ function App() {
     storedOrdered[orderIndex] = updatedOrder
     localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
     
-    // // update local orders data -> Preventing recalculating everything
+    // update local orders data -> Preventing recalculating everything
     const updatedOldOrders = orders[oldStatus].filter((el) => el.id !== updatedOrder.id) 
-    console.log('updaed', updatedOldOrders)
     const updatedNewOrders = [ updatedOrder, ...orders[newStatus] ]
     setOrders((prev) => {
       return {
@@ -206,76 +188,15 @@ function App() {
       }
     })
 
-
   }
 
   return (
     <>
-      <div className='flex justify-center'>
-        <form
-          className="bg-white rounded mb-4 p-6"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className='flex flex-row gap-9'>
-
-            <div className="relative inline-block text-left">
-              <label>Size</label>
-              <select
-                {...register("size", { required: "Title is required" })}
-                className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              >
-                <option value='small'>Small</option>
-                <option value='medium'>Medium</option>
-                <option value='large'>Large</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M5 7l5 5 5-5z" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="relative inline-block text-left">
-              <label>Type</label>
-              <select
-                {...register("type", { required: "Title is required" })}
-                className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                <option value='veg'>Veg</option>
-                <option value='non-veg'>Non Veg</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M5 7l5 5 5-5z" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="relative inline-block text-left">
-              <label>Base</label>
-              <select
-                {...register("base", { required: "Title is required" })}
-                className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                <option value='thick'>Thick</option>
-                <option value='thin'>Thin</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M5 7l5 5 5-5z" />
-                </svg>
-              </div>
-            </div>
-
-            <div>
-              <button
-                className="bg-red-500 w-[100px] text-center text-white py-2 px-2 rounded "
-                type="submit"
-              >
-                Create
-              </button>
-            </div>
-          </div>
-
-        </form>
+      <div className='flex flex-col items-center'>
+        <OrderForm
+          onSubmit={onSubmit}
+        />
+        <div className='text-red-600'>Not taking any order for now</div>
       </div>
 
       <div>
