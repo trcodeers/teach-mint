@@ -56,9 +56,9 @@ function App() {
         }
       });
 
-      setOrders({ ...orderFormat })
-
+      
     }
+    setOrders({ ...orderFormat })
   }, [])
 
 
@@ -77,16 +77,28 @@ function App() {
   });
 
   const onSubmit = (data) => {
-    console.log(data)
-    const existingOrders = JSON.parse(localStorage.getItem('orders'))
+    const existingLimitingOrders = orders ? [...orders.placed, ...orders.making] : null
+    const newOrderNo = existingLimitingOrders ? (existingLimitingOrders.length + 1) : 0
+    if(newOrderNo > 10){
+      console.log('Not taking any order for now')
+      return
+    }
     const newOrder = {
-      id: ((existingOrders ? existingOrders.length : 0) + 1),
+      id: newOrderNo,
       status: 'placed',
       createdAt: Date.now(),
       ...data
     }
-    const updatedOrders = [newOrder, ...(existingOrders ? existingOrders : [])]
+    
+    const existingOrders = localStorage.getItem('orders')
+    const updatedOrders = [newOrder, ...(existingOrders ? JSON.parse(existingOrders) : [])]
     localStorage.setItem('orders', (JSON.stringify([...updatedOrders])))
+    
+    // Set the local state
+    setOrders({
+      ...orders,
+      placed: [ newOrder, ...(orders ? orders.placed : []) ]
+    })
 
     reset();
   };
@@ -342,7 +354,7 @@ function App() {
                 return <tr>
                   <td className="px-4 py-2 border text-center">{el.id}</td>
                   <td className="px-4 py-2 border text-center">{el.status}</td>
-                  <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.seconds} sec</td>
+                  {/* <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.seconds} sec</td> */}
                   <td className="px-4 py-2 border text-center">
                     {(el.status !== 'ready' && el.status !== 'picked') && <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
                       Cancel
