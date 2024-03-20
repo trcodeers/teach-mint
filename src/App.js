@@ -117,23 +117,25 @@ function App() {
         status: 'making'
       }
 
-      // update localstorage
-      const storedOrdered = JSON.parse(localStorage.getItem('orders'))
-      const orderIndex = storedOrdered.findIndex((el) => el.id === order.id)
-      storedOrdered[orderIndex] = updatedOrder
-      localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
-      
-      // update local orders data -> Preventing recalculating everything
-      const updatedPlacedOrders = orders.placed.filter((el) => el.id !== order.id) 
-      const updatedMakingOrders = [ updatedOrder, ...orders.making ]
-      setOrders((prev) => {
-        return {
-          ...prev,
-          placed: updatedPlacedOrders,
-          making: updatedMakingOrders
-        }
+      updateStatus(updatedOrder, 'placed', 'making')
 
-      })
+      // // update localstorage
+      // const storedOrdered = JSON.parse(localStorage.getItem('orders'))
+      // const orderIndex = storedOrdered.findIndex((el) => el.id === order.id)
+      // storedOrdered[orderIndex] = updatedOrder
+      // localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
+      
+      // // update local orders data -> Preventing recalculating everything
+      // const updatedPlacedOrders = orders.placed.filter((el) => el.id !== order.id) 
+      // const updatedMakingOrders = [ updatedOrder, ...orders.making ]
+      // setOrders((prev) => {
+      //   return {
+      //     ...prev,
+      //     placed: updatedPlacedOrders,
+      //     making: updatedMakingOrders
+      //   }
+
+      // })
 
     }
     else if (status === 'making') {
@@ -141,16 +143,17 @@ function App() {
         ...order,
         status: 'ready'
       }
+      updateStatus(updatedOrder, 'making', 'ready')
     }
     else if (status === 'ready') {
       const updatedOrder = {
         ...order,
         status: 'picked'
       }
-    }
-    else {
+      updateStatus(updatedOrder, 'ready', 'picked')
 
     }
+ 
   }
 
   const onClickCancel = (order) => {
@@ -158,11 +161,36 @@ function App() {
 
   }
 
-  
+  const updateStatus = (updatedOrder, oldStatus, newStatus) =>{
+    
+    // update localstorage
+    const storedOrdered = JSON.parse(localStorage.getItem('orders'))
+    const orderIndex = storedOrdered.findIndex((el) => el.id === updatedOrder.id)
+    storedOrdered[orderIndex] = updatedOrder
+    localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
+    
+    // // update local orders data -> Preventing recalculating everything
+    const updatedOldOrders = orders[oldStatus].filter((el) => el.id !== updatedOrder.id) 
+    console.log('updaed', updatedOldOrders)
+    const updatedNewOrders = [ updatedOrder, ...orders[newStatus] ]
+    setOrders((prev) => {
+      return {
+        ...prev,
+        [oldStatus]: updatedOldOrders,
+        [newStatus]: updatedNewOrders
+      }
+    })
+
+
+  }
+
+  useEffect(()=>{
+    console.log(orders)
+  }, [orders])
 
   return (
     <>
-      {/* <div className='flex justify-center'>
+      <div className='flex justify-center'>
         <form
           className="bg-white rounded mb-4 p-6"
           onSubmit={handleSubmit(onSubmit)}
@@ -227,7 +255,7 @@ function App() {
           </div>
 
         </form>
-      </div> */}
+      </div>
 
       <div>
         <div className="flex flex-row gap-9 justify-center">
