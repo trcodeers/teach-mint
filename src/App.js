@@ -21,29 +21,34 @@ function App() {
 
       parsedOrders.forEach(element => {
         const { status } = element
+        const timeDiff = getTimeDifference(element.createdAt, Date.now())
+        
+        console.log(timeDiff)
+        const updatedElement = { ...element, timeDiff }
+        console.log(updatedElement)
         if (status === 'placed') {
-          const updatedPlacedOrders = [element, ...orderFormat.placed]
+          const updatedPlacedOrders = [updatedElement, ...orderFormat.placed]
           orderFormat = {
             ...orderFormat,
             placed: updatedPlacedOrders
           }
         }
         else if (status === 'making') {
-          const updatedMakingOrders = [element, ...orderFormat.making]
+          const updatedMakingOrders = [updatedElement, ...orderFormat.making]
           orderFormat = {
             ...orderFormat,
             making: updatedMakingOrders
           }
         }
         else if (status === 'ready') {
-          const updatedReadyOrders = [element, ...orderFormat.ready]
+          const updatedReadyOrders = [updatedElement, ...orderFormat.ready]
           orderFormat = {
             ...orderFormat,
             ready: updatedReadyOrders
           }
         }
         else if (status === 'picked') {
-          const updatedPickedOrders = [element, ...orderFormat.picked]
+          const updatedPickedOrders = [updatedElement, ...orderFormat.picked]
           orderFormat = {
             ...orderFormat,
             picked: updatedPickedOrders
@@ -73,15 +78,16 @@ function App() {
 
   const onSubmit = (data) => {
     console.log(data)
+    const existingOrders = JSON.parse(localStorage.getItem('orders'))
     const newOrder = {
-      id: (orders.length + 1),
+      id: ((existingOrders ? existingOrders.length : 0) + 1),
       status: 'placed',
       createdAt: Date.now(),
       ...data
     }
-    const updatedOrders = [newOrder, ...orders]
+    const updatedOrders = [newOrder, ...(existingOrders ? existingOrders : [])]
     localStorage.setItem('orders', (JSON.stringify([...updatedOrders])))
-    setOrders([...updatedOrders])
+
     reset();
   };
 
@@ -103,7 +109,7 @@ function App() {
   return (
     <>
       <div>
-        {/* <form
+        <form
           className="bg-white rounded mb-4 p-6"
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -164,13 +170,9 @@ function App() {
                 Save
               </button>
             </div>
-
           </div>
-          
-
-
       
-        </form> */}
+        </form>
       </div>
 
       <div>
