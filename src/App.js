@@ -192,11 +192,11 @@ function App() {
 
   return (
     <>
+    
       <div className='flex flex-col items-center'>
         <OrderForm
           onSubmit={onSubmit}
         />
-        <div className='text-red-600'>Not taking any order for now</div>
       </div>
 
       <div>

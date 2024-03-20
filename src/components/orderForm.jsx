@@ -28,7 +28,7 @@ const OrderForm = (props) => {
             <div className='flex flex-row gap-9'>
 
                 <div className="relative inline-block text-left">
-                    <label>Size</label>
+                    <label className="font-bold">Size</label>
                     <select
                         {...register("size", { required: "Title is required" })}
                         className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -37,7 +37,7 @@ const OrderForm = (props) => {
                         <option value='medium'>Medium</option>
                         <option value='large'>Large</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M5 7l5 5 5-5z" />
                         </svg>
@@ -45,14 +45,14 @@ const OrderForm = (props) => {
                 </div>
 
                 <div className="relative inline-block text-left">
-                    <label>Type</label>
+                    <label className="font-bold">Type</label>
                     <select
                         {...register("type", { required: "Title is required" })}
                         className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option value='veg'>Veg</option>
                         <option value='non-veg'>Non Veg</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M5 7l5 5 5-5z" />
                         </svg>
@@ -60,14 +60,14 @@ const OrderForm = (props) => {
                 </div>
 
                 <div className="relative inline-block text-left">
-                    <label>Base</label>
+                    <label className="font-bold">Base</label>
                     <select
                         {...register("base", { required: "Title is required" })}
                         className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option value='thick'>Thick</option>
                         <option value='thin'>Thin</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6">
                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M5 7l5 5 5-5z" />
                         </svg>
@@ -76,10 +76,10 @@ const OrderForm = (props) => {
 
                 <div>
                     <button
-                        className="bg-red-500 w-[100px] text-center text-white py-2 px-2 rounded "
+                        className="bg-red-500 w-full text-center text-white py-2 px-2 rounded mt-6 "
                         type="submit"
                     >
-                        Create
+                        Create Order
                     </button>
                 </div>
             </div>
