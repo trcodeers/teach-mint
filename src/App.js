@@ -107,9 +107,62 @@ function App() {
     return { minutes, seconds };
   }
 
+  const onClickNext = (order) => {
+    console.log(order)
+    const { status } = order
+    if (status === 'placed') {
+      
+      const updatedOrder = {
+        ...order,
+        status: 'making'
+      }
+
+      // update localstorage
+      const storedOrdered = JSON.parse(localStorage.getItem('orders'))
+      const orderIndex = storedOrdered.findIndex((el) => el.id === order.id)
+      storedOrdered[orderIndex] = updatedOrder
+      localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
+      
+      // update local orders data -> Preventing recalculating everything
+      const updatedPlacedOrders = orders.placed.filter((el) => el.id !== order.id) 
+      const updatedMakingOrders = [ updatedOrder, ...orders.making ]
+      setOrders((prev) => {
+        return {
+          ...prev,
+          placed: updatedPlacedOrders,
+          making: updatedMakingOrders
+        }
+
+      })
+
+    }
+    else if (status === 'making') {
+      const updatedOrder = {
+        ...order,
+        status: 'ready'
+      }
+    }
+    else if (status === 'ready') {
+      const updatedOrder = {
+        ...order,
+        status: 'picked'
+      }
+    }
+    else {
+
+    }
+  }
+
+  const onClickCancel = (order) => {
+    console.log(order)
+
+  }
+
+  
+
   return (
     <>
-      <div className='flex justify-center'>
+      {/* <div className='flex justify-center'>
         <form
           className="bg-white rounded mb-4 p-6"
           onSubmit={handleSubmit(onSubmit)}
@@ -174,7 +227,7 @@ function App() {
           </div>
 
         </form>
-      </div>
+      </div> */}
 
       <div>
         <div className="flex flex-row gap-9 justify-center">
@@ -185,6 +238,7 @@ function App() {
                 orders?.placed?.map((el) => {
                   return <OrderCard
                     order={el}
+                    onClickNext={onClickNext}
                   />
                 })
               }
@@ -195,11 +249,11 @@ function App() {
           <div className="w-40">
             <div className="text-center pb-8 font-bold">Making</div>
             <div className="flex flex-col gap-6">
-
               {
-                orders?.placed?.map((el) => {
+                orders?.making?.map((el) => {
                   return <OrderCard
                     order={el}
+                    onClickNext={onClickNext}
                   />
                 })
               }
@@ -209,11 +263,11 @@ function App() {
           <div className="w-40">
             <div className="text-center pb-8 font-bold">Ready</div>
             <div className="flex flex-col gap-6">
-
               {
                 orders?.ready?.map((el) => {
                   return <OrderCard
                     order={el}
+                    onClickNext={onClickNext}
                   />
                 })
               }
@@ -223,11 +277,11 @@ function App() {
           <div className="w-40">
             <div className="text-center pb-8 font-bold">Picked</div>
             <div className="flex flex-col gap-6">
-
               {
                 orders?.picked?.map((el) => {
                   return <OrderCard
                     order={el}
+                    onClickNext={onClickNext}
                   />
                 })
               }
@@ -239,10 +293,10 @@ function App() {
 
       </div>
 
-      <div>
+      {/* <div>
         <div className="overflow-x-auto flex justify-center mt-32 mb-32">
           <table className="table-auto w-[70%] border border-collapse">
-            
+
             <thead>
               <tr>
                 <th className="px-4 py-2 border">Order id</th>
@@ -251,39 +305,39 @@ function App() {
                 <th className="px-4 py-2 border">Action</th>
               </tr>
             </thead>
-            
+
             <tbody className='mb-20'>
-              
-              {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked ].map((el) =>{
-                 return <tr>
-                    <td className="px-4 py-2 border text-center">{el.id}</td>
-                    <td className="px-4 py-2 border text-center">{el.status}</td>
-                    <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.sec} sec</td>
-                    <td className="px-4 py-2 border text-center">
-                      <button className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
-                        Cancel
-                      </button>
-                    </td>
+
+              {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked].map((el) => {
+                return <tr>
+                  <td className="px-4 py-2 border text-center">{el.id}</td>
+                  <td className="px-4 py-2 border text-center">{el.status}</td>
+                  <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.sec} sec</td>
+                  <td className="px-4 py-2 border text-center">
+                    <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
+                      Cancel
+                    </button>
+                  </td>
                 </tr>
               })}
 
 
             </tbody>
-            
+
             <tfoot>
               <tr>
                 <td colspan="1" className="px-4 py-2 border font-bold">
                   Total order delivered
                 </td>
                 <td colspan="2" className="px-4 py-2 border font-bold">
-                  {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked ].length}
+                  {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked].length}
                 </td>
               </tr>
             </tfoot>
 
           </table>
         </div>
-      </div>
+      </div> */}
 
     </>
 
