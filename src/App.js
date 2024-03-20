@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { useForm } from "react-hook-form";
 import OrderCard from './components/orderCard';
+import OrderTable from './components/orderTable';
 
 function App() {
 
@@ -342,49 +343,12 @@ function App() {
       </div>
 
       <div>
-        <div className="overflow-x-auto flex justify-center mt-32 mb-32">
-          <table className="table-auto w-[70%] border border-collapse">
-
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border">Order id</th>
-                <th className="px-4 py-2 border">Stage</th>
-                <th className="px-4 py-2 border">Times Spent</th>
-                <th className="px-4 py-2 border">Action</th>
-              </tr>
-            </thead>
-
-            <tbody className='mb-20'>
-
-              {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked].map((el) => {
-                return <tr>
-                  <td className="px-4 py-2 border text-center">{el.id}</td>
-                  <td className="px-4 py-2 border text-center">{el.status}</td>
-                  {/* <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.seconds} sec</td> */}
-                  <td className="px-4 py-2 border text-center">
-                    {(el.status !== 'ready' && el.status !== 'picked') && <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
-                      Cancel
-                    </button>
-                    }
-                  </td>
-                </tr>
-              })}
-
-
-            </tbody>
-
-            <tfoot>
-              <tr>
-                <td colspan="1" className="px-4 py-2 border font-bold">
-                  Total order delivered
-                </td>
-                <td colspan="2" className="px-4 py-2 border font-bold">
-                  {orders && orders.picked.length}
-                </td>
-              </tr>
-            </tfoot>
-
-          </table>
+        <div className="overflow-x-auto flex justify-center mt-32 mb-32"> 
+          {orders && <OrderTable
+            allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
+            deliveredOrdersNo={orders ? orders.picked.length : 0}
+            onClickCancel={onClickCancel}
+          />}
         </div>
       </div>
 
