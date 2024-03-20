@@ -5,6 +5,7 @@ import OrderCard from './components/orderCard';
 
 function App() {
 
+
   const [orders, setOrders] = useState(null)
 
   useEffect(() => {
@@ -176,10 +177,10 @@ function App() {
       </div>
 
       <div>
-        <div class="flex flex-row gap-9 justify-center">
-          <div class="w-40">
-            <div class="text-center pb-8 font-bold">Placed</div>
-            <div class="flex flex-col gap-6">
+        <div className="flex flex-row gap-9 justify-center">
+          <div className="w-40">
+            <div className="text-center pb-8 font-bold">Placed</div>
+            <div className="flex flex-col gap-6">
               {
                 orders?.placed?.map((el) => {
                   return <OrderCard
@@ -191,9 +192,9 @@ function App() {
 
           </div>
 
-          <div class="w-40">
-            <div class="text-center pb-8 font-bold">Making</div>
-            <div class="flex flex-col gap-6">
+          <div className="w-40">
+            <div className="text-center pb-8 font-bold">Making</div>
+            <div className="flex flex-col gap-6">
 
               {
                 orders?.placed?.map((el) => {
@@ -205,9 +206,9 @@ function App() {
             </div>
           </div>
 
-          <div class="w-40">
-            <div class="text-center pb-8 font-bold">Ready</div>
-            <div class="flex flex-col gap-6">
+          <div className="w-40">
+            <div className="text-center pb-8 font-bold">Ready</div>
+            <div className="flex flex-col gap-6">
 
               {
                 orders?.ready?.map((el) => {
@@ -219,9 +220,9 @@ function App() {
             </div>
           </div>
 
-          <div class="w-40">
-            <div class="text-center pb-8 font-bold">Picked</div>
-            <div class="flex flex-col gap-6">
+          <div className="w-40">
+            <div className="text-center pb-8 font-bold">Picked</div>
+            <div className="flex flex-col gap-6">
 
               {
                 orders?.picked?.map((el) => {
@@ -239,38 +240,43 @@ function App() {
       </div>
 
       <div>
-        <div class="overflow-x-auto flex justify-center mt-32 mb-32">
-          <table class="table-auto w-[70%] border border-collapse">
+        <div className="overflow-x-auto flex justify-center mt-32 mb-32">
+          <table className="table-auto w-[70%] border border-collapse">
+            
             <thead>
               <tr>
-                <th class="px-4 py-2 border">Order id</th>
-                <th class="px-4 py-2 border">Stage</th>
-                <th class="px-4 py-2 border">Times Spent</th>
-                <th class="px-4 py-2 border">Action</th>
+                <th className="px-4 py-2 border">Order id</th>
+                <th className="px-4 py-2 border">Stage</th>
+                <th className="px-4 py-2 border">Times Spent</th>
+                <th className="px-4 py-2 border">Action</th>
               </tr>
             </thead>
             
-            <tbody>
+            <tbody className='mb-20'>
               
-              <tr>
-                <td class="px-4 py-2 border text-center">Data 1</td>
-                <td class="px-4 py-2 border text-center">Data 2</td>
-                <td class="px-4 py-2 border text-center">Data 3</td>
-                <td class="px-4 py-2 border text-center">
-                  <button class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
-                    Cancel
-                  </button>
-                </td>
-              </tr>
+              {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked ].map((el) =>{
+                 return <tr>
+                    <td className="px-4 py-2 border text-center">{el.id}</td>
+                    <td className="px-4 py-2 border text-center">{el.status}</td>
+                    <td className="px-4 py-2 border text-center">{el.timeDiff.minutes} min {el.timeDiff.sec} sec</td>
+                    <td className="px-4 py-2 border text-center">
+                      <button className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
+                        Cancel
+                      </button>
+                    </td>
+                </tr>
+              })}
+
+
             </tbody>
             
             <tfoot>
               <tr>
-                <td colspan="1" class="px-4 py-2 border font-bold">
+                <td colspan="1" className="px-4 py-2 border font-bold">
                   Total order delivered
                 </td>
-                <td colspan="2" class="px-4 py-2 border font-bold">
-                  100
+                <td colspan="2" className="px-4 py-2 border font-bold">
+                  {orders && [...orders.placed, ...orders.making, ...orders.ready, ...orders.picked ].length}
                 </td>
               </tr>
             </tfoot>
