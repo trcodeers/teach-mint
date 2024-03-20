@@ -27,10 +27,10 @@ const OrderCard = (props) => {
     }
 
     return (
-        <div className={`w-44 h-36 border border-gray-300 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes > 3 ? 'bg-red-400' : ''}`}>
+        <div className={`w-44 h-36 border border-gray-500 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes > 3 ? 'bg-red-400' : ''}`}>
             <div>{id}</div>
             {status !== 'picked' && <div>{timeDiffMessage?.minutes} min {timeDiffMessage?.seconds} sec</div>}
-            {status !== 'picked' && <div> <button onClick={() => onClickNext(order)} className="bg-gray-200 px-4 py-1 mt-2 rounded-md">Next</button></div>}
+            {status !== 'picked' && <div> <button onClick={() => onClickNext(order)} className="bg-gray-200 px-4 py-1 mt-2 rounded-md border border-gray-500">Next</button></div>}
             {status === 'picked' && <p>Picked</p>}
         </div>
     )
