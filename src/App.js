@@ -1,48 +1,49 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { useForm } from "react-hook-form";
+import OrderCard from './components/orderCard';
 
 function App() {
 
   const [orders, setOrders] = useState(null)
 
-  useEffect(()=>{
+  useEffect(() => {
     const existingOrders = localStorage.getItem('orders')
-let orderFormat = {
-  placed: [],
-  making: [],
-  ready: [],
-  picked: []
-}
-    if(existingOrders){
+    let orderFormat = {
+      placed: [],
+      making: [],
+      ready: [],
+      picked: []
+    }
+    if (existingOrders) {
 
       const parsedOrders = JSON.parse(existingOrders)
-      
+
       parsedOrders.forEach(element => {
         const { status } = element
-        if(status === 'placed'){
-          const updatedPlacedOrders = [ element, ...orderFormat.placed]
+        if (status === 'placed') {
+          const updatedPlacedOrders = [element, ...orderFormat.placed]
           orderFormat = {
             ...orderFormat,
             placed: updatedPlacedOrders
           }
         }
-        else if(status === 'making'){
-          const updatedMakingOrders = [ element, ...orderFormat.making]
+        else if (status === 'making') {
+          const updatedMakingOrders = [element, ...orderFormat.making]
           orderFormat = {
             ...orderFormat,
             making: updatedMakingOrders
           }
         }
-        else if(status === 'ready'){
-          const updatedReadyOrders = [ element, ...orderFormat.ready]
+        else if (status === 'ready') {
+          const updatedReadyOrders = [element, ...orderFormat.ready]
           orderFormat = {
             ...orderFormat,
             ready: updatedReadyOrders
           }
         }
-        else if(status === 'picked'){
-          const updatedPickedOrders = [ element, ...orderFormat.picked]
+        else if (status === 'picked') {
+          const updatedPickedOrders = [element, ...orderFormat.picked]
           orderFormat = {
             ...orderFormat,
             picked: updatedPickedOrders
@@ -51,7 +52,7 @@ let orderFormat = {
       });
 
       setOrders({ ...orderFormat })
-    
+
     }
   }, [])
 
@@ -78,9 +79,9 @@ let orderFormat = {
       createdAt: Date.now(),
       ...data
     }
-    const updatedOrders = [ newOrder, ...orders ]
-    localStorage.setItem('orders',(JSON.stringify([ ...updatedOrders ])))
-    setOrders([ ...updatedOrders ])
+    const updatedOrders = [newOrder, ...orders]
+    localStorage.setItem('orders', (JSON.stringify([...updatedOrders])))
+    setOrders([...updatedOrders])
     reset();
   };
 
@@ -171,57 +172,69 @@ let orderFormat = {
       
         </form> */}
       </div>
-    
-        <div>
-        <div class="flex flex-row gap-9">
-  
-  <div class="w-40">
-    <div class="text-center">PLaced</div>
-    <div class="flex flex-col gap-6">
-      <div class="w-44 h-36 bg-black text-white flex flex-col justify-center text-center rounded-2xl">
-        <div>Order 1</div>
-        <div>3 min 10 sec</div>
-        <div> <button>Next</button></div>
-      </div>
-        <div class="w-44 h-36 bg-black text-white flex flex-col justify-center text-center">
-        <div>Order 1</div>
-        <div>3 min 10 sec</div>
-        <div> <button>Next</button></div>
-      </div>
-    </div>
 
-  </div>
-  
+      <div>
+        <div class="flex flex-row gap-9 justify-center">
+          <div class="w-40">
+            <div class="text-center pb-8 font-bold">Placed</div>
+            <div class="flex flex-col gap-6">
+              {
+                orders?.placed?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                  />
+                })
+              }
+            </div>
 
-    <div class="w-40">
-      <div class="text-center">Making</div>
-    <div class="w-44 h-36 bg-black text-white flex flex-col justify-center text-center">
-      <div>Order 1</div>
-      <div>3 min 10 sec</div>
-      <div> <button>Next</button></div>
-    </div> 
-  </div>
-    <div class="w-40">
-      <div>Ready</div>
-    <div class="w-44 h-36 bg-black text-white flex flex-col justify-center text-center">
-      <div class="text-center">Order 1</div>
-      <div>3 min 10 sec</div>
-      <div> <button>Next</button></div>
-    </div> 
-  </div>
-    <div class="w-40">
-      <div class="text-center">Picked</div>
-    <div class="w-44 h-36 bg-black text-white flex flex-col justify-center text-center">
-      <div>Order 1</div>
-      <div>3 min 10 sec</div>
-      <div> <button>Next</button></div>
-    </div> 
-  </div>
-</div>
+          </div>
 
+          <div class="w-40">
+            <div class="text-center pb-8 font-bold">Making</div>
+            <div class="flex flex-col gap-6">
 
+              {
+                orders?.placed?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                  />
+                })
+              }
+            </div>
+          </div>
 
+          <div class="w-40">
+            <div class="text-center pb-8 font-bold">Ready</div>
+            <div class="flex flex-col gap-6">
+
+              {
+                orders?.ready?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                  />
+                })
+              }
+            </div>
+          </div>
+
+          <div class="w-40">
+            <div class="text-center pb-8 font-bold">Picked</div>
+            <div class="flex flex-col gap-6">
+
+              {
+                orders?.picked?.map((el) => {
+                  return <OrderCard
+                    order={el}
+                  />
+                })
+              }
+            </div>
+          </div>
         </div>
+
+
+
+      </div>
     </>
 
   );
