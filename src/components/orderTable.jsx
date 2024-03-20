@@ -31,7 +31,7 @@ const OrderTable = (props) => {
                 <tr>
                     <th className="px-4 py-2 border">Order id</th>
                     <th className="px-4 py-2 border">Stage</th>
-                    <th className="px-4 py-2 border">Times Spent</th>
+                    <th className="px-4 py-2 border">Total Time Spent</th>
                     <th className="px-4 py-2 border">Action</th>
                 </tr>
             </thead>
@@ -42,7 +42,7 @@ const OrderTable = (props) => {
                     return <tr>
                         <td className="px-4 py-2 border text-center">{el.id}</td>
                         <td className="px-4 py-2 border text-center">{el.status}</td>
-                        <td className="px-4 py-2 border text-center">{getTimeDiffMessage(el[`${el.status}At`])} sec</td>
+                        <td className="px-4 py-2 border text-center">{getTimeDiffMessage(el.placedAt)} sec</td>
                         <td className="px-4 py-2 border text-center">
                             {(el.status !== 'ready' && el.status !== 'picked') && <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
                                 Cancel
