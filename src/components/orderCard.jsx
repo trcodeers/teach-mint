@@ -3,12 +3,13 @@ import { useEffect, useState } from "react"
 
 const OrderCard = (props) => {
     const { order, onClickNext } = props
-    const { id, type, status, base, createdAt, timeDiff } = order
+    const { id, status, timeDiff } = order
     const [timeDiffMessage, setTimeDiffMessage] = useState('')
 
     useEffect(()=>{
-        const { minutes, seconds } = getTimeDifference(createdAt, Date.now())
+        const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
         setTimeDiffMessage(`${minutes} min ${seconds} sec`)
+    
     },[])
 
     function getTimeDifference(startTimeStamp, endTimeStamp) {
@@ -29,8 +30,9 @@ const OrderCard = (props) => {
     return (
         <div className={`w-44 h-36 border border-gray-300 flex flex-col justify-center text-center rounded-2xl ${timeDiff?.minutes > 3 ? 'bg-red-400' : ''}`}>
             <div>{id}</div>
-            <div>{timeDiffMessage}</div>
+            {status !== 'picked' && <div>{timeDiffMessage}</div>}
             {status !== 'picked' && <div> <button onClick={() => onClickNext(order)} className="bg-gray-200 px-4 py-1 mt-2 rounded-md">Next</button></div>}
+            {status === 'picked' && <p>Picked</p>}
         </div>
     )
 }
