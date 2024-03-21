@@ -1,12 +1,18 @@
 
 export const Pizza_Type = [
-    { label: '', value : ''}
+    { label: 'Veg', value : 'veg'} ,
+    { label: 'Non Veg', value : 'non-veg'} ,
 ]
 
 export const Pizza_Size = [
-    { label: '', value : ''}
+
+    { label: 'Small', value : 'small'},
+    { label: 'Medium', value : 'medium'},
+    { label: 'Large', value : 'large'},
+
 ]
 
 export const Pizza_Base = [
-    { label: '', value : ''}
+    { label: 'Thick', value : 'thick'},
+    { label: 'Thin', value : 'thin'},
 ]
