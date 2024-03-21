@@ -6,13 +6,15 @@ const OrderCard = (props) => {
     const { id, status } = order
     const [timeDiffMessage, setTimeDiffMessage] = useState(null)
 
-    useEffect(()=>{        
-        const intervalId = setInterval(() => {
-            const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
-            setTimeDiffMessage({minutes, seconds})    
-        }, 1000); // Interval of 1 second
-      
-        return () => clearInterval(intervalId); // Cleanup on component unmount
+    useEffect(()=>{ 
+        if(status !== 'picked'){
+            const intervalId = setInterval(() => {
+                const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
+                setTimeDiffMessage({minutes, seconds})    
+            }, 1000); 
+          
+            return () => clearInterval(intervalId); // Cleanup on component unmount
+        }       
     
     },[])
 
