@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { Pizza_Base, Pizza_Size, Pizza_Type } from "../constants.js/pizza";
 
 
 const OrderForm = (props) => {
@@ -39,9 +40,11 @@ const OrderForm = (props) => {
                             {...register("size", { required: "Required" })}
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         >
-                            <option value='small'>Small</option>
-                            <option value='medium'>Medium</option>
-                            <option value='large'>Large</option>
+                            {
+                                Pizza_Size.map((el, index) =>{
+                                    return <option key={index} value={el.value}>{el.label}</option>
+                                })
+                            }
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6">
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -62,8 +65,11 @@ const OrderForm = (props) => {
                         <select
                             {...register("type", { required: "Required" })}
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option value='veg'>Veg</option>
-                            <option value='non-veg'>Non Veg</option>
+                            {
+                                Pizza_Type.map((el, index) =>{
+                                    return <option key={index} value={el.value}>{el.label}</option>
+                                })
+                            }
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6">
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -84,8 +90,11 @@ const OrderForm = (props) => {
                         <select
                             {...register("base", { required: "Required" })}
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option value='thick'>Thick</option>
-                            <option value='thin'>Thin</option>
+                            {
+                                Pizza_Base.map((el, index) =>{
+                                    return   <option value={el.value}>{el.label}</option>
+                                })
+                            }
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6">
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
