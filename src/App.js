@@ -3,8 +3,10 @@ import './App.css';
 import OrderCard from './components/orderCard';
 import OrderTable from './components/orderTable';
 import OrderForm from './components/orderForm';
+import { useSnackbar } from "notistack";
 
 function App() {
+  const { enqueueSnackbar } = useSnackbar();
 
   const [orders, setOrders] = useState(null)
   const [totalOrders, setTotalOrders] = useState(0)
@@ -64,8 +66,13 @@ function App() {
 
   const onSubmit = (data) => {
     const limitingOrders = orders ? [...orders.placed, ...orders.making] : []
-    if(limitingOrders.length > 10){
-      console.log('Not taking any order for now')
+    if((limitingOrders.length + 1) > 10){
+      enqueueSnackbar("Not taking any order for now", {
+        autoHideDuration: 1000,
+        variant: "default",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+
       return
     }
     const existingItems = localStorage.getItem('orders')
@@ -89,6 +96,11 @@ function App() {
       placed: [ newOrder, ...(orders ? orders.placed : []) ]
     })
 
+    enqueueSnackbar("Order placed", {
+      autoHideDuration: 1000,
+      variant: "success",
+      anchorOrigin: { vertical: "top", horizontal: "right" },
+    });
   };
 
   function getTimeDifference(startTimeStamp, endTimeStamp) {
