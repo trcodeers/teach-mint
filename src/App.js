@@ -207,7 +207,7 @@ function App() {
           />
         </div>
   
-        {totalOrders > 0 && <div className='flex flex-col justify-center items-start '>
+        {totalOrders > 0 &&  orders &&  <div className='flex flex-col justify-center items-start '>
           <div className='text-lg'>Pizza Stage Section</div>
           <div className="flex flex-row justify-center">
             <div className="w-60 border border-gray-500">
@@ -216,7 +216,7 @@ function App() {
                 {
                   orders?.placed?.map((el, index) => {
                     return <OrderCard
-                      key={index}
+                      key={el.placedAt}
                       order={el}
                       onClickNext={onClickNext}
                     />
@@ -231,8 +231,8 @@ function App() {
                 {
                   orders?.making?.map((el, index) => {
                     return <OrderCard
-                      key={index}
-                      order={el}
+                    key={el.placedAt}
+                    order={el}
                       onClickNext={onClickNext}
                     />
                   })
@@ -246,8 +246,8 @@ function App() {
                 {
                   orders?.ready?.map((el, index) => {
                     return <OrderCard
-                      key={index}
-                      order={el}
+                    key={el.placedAt}
+                    order={el}
                       onClickNext={onClickNext}
                     />
                   })
@@ -261,8 +261,8 @@ function App() {
                 {
                   orders?.picked?.map((el, index) => {
                     return <OrderCard
-                      key={index}
-                      order={el}
+                    key={el.placedAt}
+                    order={el}
                       onClickNext={onClickNext}
                     />
                   })

@@ -3,13 +3,17 @@ import { useEffect, useState } from "react"
 
 const OrderCard = (props) => {
     const { order, onClickNext } = props
-    const { id, status, timeDiff } = order
+    const { id, status } = order
     const [timeDiffMessage, setTimeDiffMessage] = useState(null)
 
-    useEffect(()=>{
-        // console.log(order)
-        const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
-        setTimeDiffMessage({minutes, seconds})
+    useEffect(()=>{        
+        const intervalId = setInterval(() => {
+            const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
+            setTimeDiffMessage({minutes, seconds})    
+        }, 1000); // Interval of 1 second
+      
+        return () => clearInterval(intervalId); // Cleanup on component unmount
+    
     },[])
 
     function getTimeDifference(startTimeStamp, endTimeStamp) {
@@ -30,13 +34,12 @@ const OrderCard = (props) => {
     return (
         <div className={`w-44 h-36 border border-gray-500 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes >= 3 ? 'bg-red-400' : ''}`}>
             <div>{id}</div>
-            {status !== 'picked' && <div>{timeDiffMessage?.minutes} min {timeDiffMessage?.seconds} sec</div>}
+            {timeDiffMessage && status !== 'picked' && <div>{timeDiffMessage?.minutes} min {timeDiffMessage?.seconds} sec</div>}
                 <div> 
                     <button onClick={() => onClickNext(order)} className="bg-gray-200 px-4 py-1 mt-2 rounded-md border border-gray-500">
                         {status === 'picked' ? 'Picked' : 'Next'}
                     </button>
-                </div>
-            
+                </div>       
         </div>
     )
 }
