@@ -218,8 +218,9 @@ function App() {
               <div className="text-center pb-8 font-bold">Placed</div>
               <div className="flex  flex-col items-center gap-6  pb-4">
                 {
-                  orders?.placed?.map((el) => {
+                  orders?.placed?.map((el, index) => {
                     return <OrderCard
+                      key={index}
                       order={el}
                       onClickNext={onClickNext}
                     />
@@ -232,8 +233,9 @@ function App() {
               <div className="text-center pb-8 font-bold">Making</div>
               <div className="flex  flex-col items-center gap-6 pb-4">
                 {
-                  orders?.making?.map((el) => {
+                  orders?.making?.map((el, index) => {
                     return <OrderCard
+                      key={index}
                       order={el}
                       onClickNext={onClickNext}
                     />
@@ -246,8 +248,9 @@ function App() {
               <div className="text-center pb-8 font-bold">Ready</div>
               <div className="flex  flex-col items-center gap-6 pb-4">
                 {
-                  orders?.ready?.map((el) => {
+                  orders?.ready?.map((el, index) => {
                     return <OrderCard
+                      key={index}
                       order={el}
                       onClickNext={onClickNext}
                     />
@@ -260,8 +263,9 @@ function App() {
               <div className="text-center pb-8 font-bold">Picked</div>
               <div className="flex  flex-col items-center gap-6 pb-4">
                 {
-                  orders?.picked?.map((el) => {
+                  orders?.picked?.map((el, index) => {
                     return <OrderCard
+                      key={index}
                       order={el}
                       onClickNext={onClickNext}
                     />

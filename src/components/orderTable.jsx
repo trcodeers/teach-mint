@@ -23,8 +23,8 @@ const OrderTable = (props) => {
 
             <tbody className='mb-20'>
 
-                {allOrders && allOrders.map((el) => {
-                    return <tr>
+                {allOrders && allOrders.map((el, index) => {
+                    return <tr key={index}>
                         <td className="px-4 py-2 border text-center">{el.id}</td>
                         <td className="px-4 py-2 border text-center">{el.status}</td>
                         <td className="px-4 py-2 border text-center">{getTimeDiffMessage(el.placedAt)} sec</td>
@@ -41,10 +41,10 @@ const OrderTable = (props) => {
 
             <tfoot>
                 <tr>
-                    <td colspan="1" className="px-4 py-2 border font-bold text-end">
+                    <td colSpan="1" className="px-4 py-2 border font-bold text-end">
                         Total order delivered
                     </td>
-                    <td colspan="2" className="px-4 py-2 border font-bold">
+                    <td colSpan="2" className="px-4 py-2 border font-bold">
                         {deliveredOrdersNo}
                     </td>
                 </tr>
