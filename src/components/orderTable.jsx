@@ -6,7 +6,7 @@ const OrderTable = (props) => {
 
     return (
         <>
-            <table className="table-auto border border-collapse mx-auto" style={{ width: '70%'}}>
+            <table className="table-auto border border-collapse mx-auto" style={{ width: '70%' }}>
 
                 <thead>
                     <tr>

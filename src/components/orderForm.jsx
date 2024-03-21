@@ -5,23 +5,23 @@ import { Pizza_Base, Pizza_Size, Pizza_Type } from "../constants.js/pizza";
 const OrderForm = (props) => {
 
     const { onSubmit, } = props
-    
+
     const {
         register,
         handleSubmit,
         reset,
         setValue,
         formState: { errors },
-      } = useForm({
+    } = useForm({
         defaultValues: {
-          type: "",
-          size: "",
-          base: "",
+            type: "",
+            size: "",
+            base: "",
         },
-      });
-    
+    });
 
-    const onFormSubmit = (data) =>{
+
+    const onFormSubmit = (data) => {
         onSubmit(data)
         reset()
     }
@@ -41,7 +41,7 @@ const OrderForm = (props) => {
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         >
                             {
-                                Pizza_Size.map((el, index) =>{
+                                Pizza_Size.map((el, index) => {
                                     return <option key={index} value={el.value}>{el.label}</option>
                                 })
                             }
@@ -66,7 +66,7 @@ const OrderForm = (props) => {
                             {...register("type", { required: "Required" })}
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                             {
-                                Pizza_Type.map((el, index) =>{
+                                Pizza_Type.map((el, index) => {
                                     return <option key={index} value={el.value}>{el.label}</option>
                                 })
                             }
@@ -80,19 +80,19 @@ const OrderForm = (props) => {
                     <div>
                         {errors.type && (
                             <p className="text-red-700">{errors.type.message}</p>
-                        )}    
+                        )}
                     </div>
                 </div>
 
-                <div  className="flex flex-col">
+                <div className="flex flex-col">
                     <div className="relative inline-block text-left">
                         <label className="font-bold">Base</label>
                         <select
                             {...register("base", { required: "Required" })}
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                             {
-                                Pizza_Base.map((el, index) =>{
-                                    return   <option key={index} value={el.value}>{el.label}</option>
+                                Pizza_Base.map((el, index) => {
+                                    return <option key={index} value={el.value}>{el.label}</option>
                                 })
                             }
                         </select>

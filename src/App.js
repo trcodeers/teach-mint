@@ -15,7 +15,7 @@ function App() {
     updateOrdersUI()
   }, [])
 
-  const updateOrdersUI = () =>{
+  const updateOrdersUI = () => {
     const existingOrders = localStorage.getItem('orders')
     let orderFormat = {
       placed: [],
@@ -67,16 +67,16 @@ function App() {
             delivered: updatedDeliveredOrders
           }
         }
-      });     
+      });
     }
     setOrders({ ...orderFormat })
   }
 
   const onSubmit = (data) => {
     const limitingOrders = orders ? [...orders.placed, ...orders.making] : []
-    
+
     // IF Placed orders + making orders = 10, no more orders
-    if((limitingOrders.length + 1) > 10){
+    if ((limitingOrders.length + 1) > 10) {
       enqueueSnackbar("Not taking any order for now", {
         autoHideDuration: 1000,
         variant: "default",
@@ -94,12 +94,12 @@ function App() {
       placedAt: Date.now(),
       ...data
     }
-    
+
     const existingOrders = localStorage.getItem('orders')
     const updatedOrders = [newOrder, ...(existingOrders ? JSON.parse(existingOrders) : [])]
     localStorage.setItem('orders', (JSON.stringify([...updatedOrders])))
     setTotalOrders(updatedOrders.length)
-    
+
     updateOrdersUI()
 
     enqueueSnackbar("Order placed", {
@@ -111,7 +111,7 @@ function App() {
 
   const onClickNext = (order) => {
     const { status } = order
-    if (status === 'placed') {   
+    if (status === 'placed') {
       const updatedOrder = {
         ...order,
         status: 'making',
@@ -135,7 +135,7 @@ function App() {
       }
       updateStatus(updatedOrder, 'ready', 'picked')
     }
-    else{
+    else {
       const updatedOrder = {
         ...order,
         status: 'delivered',
@@ -143,48 +143,48 @@ function App() {
       }
       updateStatus(updatedOrder, 'picked', 'delivered')
     }
- 
+
   }
 
   const onClickCancel = (order) => {
-    if(order.status !== 'ready' && order.status !== 'picked'){
-      
+    if (order.status !== 'ready' && order.status !== 'picked') {
+
       // Remove from local storage
-        const existingOrders = JSON.parse(localStorage.getItem('orders'))
-        const updatedOrders = existingOrders.filter((el) => el.id !== order.id)
-        localStorage.setItem('orders', JSON.stringify(updatedOrders))
-        setTotalOrders(updatedOrders.length)
-      
+      const existingOrders = JSON.parse(localStorage.getItem('orders'))
+      const updatedOrders = existingOrders.filter((el) => el.id !== order.id)
+      localStorage.setItem('orders', JSON.stringify(updatedOrders))
+      setTotalOrders(updatedOrders.length)
+
       // Remove from local state 
-      if(order.status === 'placed'){     
+      if (order.status === 'placed') {
         const updatedPlacedOrder = orders.placed.filter((el) => el.id !== order.id)
         setOrders({
           ...orders,
           placed: updatedPlacedOrder
         })
-      } 
+      }
 
-      else if(order.status === 'making'){     
+      else if (order.status === 'making') {
         const updatedMakingOrder = orders.making.filter((el) => el.id !== order.id)
         setOrders({
           ...orders,
           making: updatedMakingOrder
-        })   
+        })
       }
     }
   }
 
-  const updateStatus = (updatedOrder, oldStatus, newStatus) =>{
-    
+  const updateStatus = (updatedOrder, oldStatus, newStatus) => {
+
     // update localstorage
     const storedOrdered = JSON.parse(localStorage.getItem('orders'))
     const orderIndex = storedOrdered.findIndex((el) => el.id === updatedOrder.id)
     storedOrdered[orderIndex] = updatedOrder
-    localStorage.setItem('orders', JSON.stringify(storedOrdered)) 
-    
+    localStorage.setItem('orders', JSON.stringify(storedOrdered))
+
     // update local orders data -> Preventing recalculating everything
-    const updatedOldOrders = orders[oldStatus].filter((el) => el.id !== updatedOrder.id) 
-    const updatedNewOrders = [ updatedOrder, ...orders[newStatus] ]
+    const updatedOldOrders = orders[oldStatus].filter((el) => el.id !== updatedOrder.id)
+    const updatedNewOrders = [updatedOrder, ...orders[newStatus]]
     setOrders((prev) => {
       return {
         ...prev,
@@ -203,87 +203,87 @@ function App() {
           onSubmit={onSubmit}
         />
       </div>
-            
+
       <div className='flex flex-grow justify-center '>
-        {totalOrders > 0 &&  orders &&  
-            <div className="flex flex-row overflow-x-auto w-[70%]">
-              
-              <div className="w-60 px-6 border border-gray-500">
-                <div className="text-center pb-8 font-bold">Placed</div>
-                <div className="flex  flex-col items-center gap-6  pb-4">
-                  {
-                    orders?.placed?.map((el, index) => {
-                      return <OrderCard
-                        key={el.placedAt}
-                        order={el}
-                        onClickNext={onClickNext}
-                      />
-                    })
-                  }
-                </div>
-              </div>
+        {totalOrders > 0 && orders &&
+          <div className="flex flex-row overflow-x-auto w-[70%]">
 
-              <div className="w-60 px-6 border border-gray-500">
-                <div className="text-center pb-8 font-bold">Making</div>
-                <div className="flex  flex-col items-center gap-6 pb-4">
-                  {
-                    orders?.making?.map((el, index) => {
-                      return <OrderCard
+            <div className="w-60 px-6 border border-gray-500">
+              <div className="text-center pb-8 font-bold">Placed</div>
+              <div className="flex  flex-col items-center gap-6  pb-4">
+                {
+                  orders?.placed?.map((el, index) => {
+                    return <OrderCard
                       key={el.placedAt}
                       order={el}
-                        onClickNext={onClickNext}
-                      />
-                    })
-                  }
-                </div>
+                      onClickNext={onClickNext}
+                    />
+                  })
+                }
               </div>
-
-              <div className="w-60 px-6 border border-gray-500">
-                <div className="text-center pb-8 font-bold">Ready</div>
-                <div className="flex  flex-col items-center gap-6 pb-4">
-                  {
-                    orders?.ready?.map((el, index) => {
-                      return <OrderCard
-                      key={el.placedAt}
-                      order={el}
-                        onClickNext={onClickNext}
-                      />
-                    })
-                  }
-                </div>
-              </div>
-
-              <div className="w-60 px-6 border border-gray-500">
-                <div className="text-center pb-8 font-bold">Picked</div>
-                <div className="flex  flex-col items-center gap-6 pb-4">
-                  {
-                    orders?.picked?.map((el, index) => {
-                      return <OrderCard
-                      key={el.placedAt}
-                      order={el}
-                        onClickNext={onClickNext}
-                      />
-                    })
-                  }
-                </div>
-              </div>
-
             </div>
+
+            <div className="w-60 px-6 border border-gray-500">
+              <div className="text-center pb-8 font-bold">Making</div>
+              <div className="flex  flex-col items-center gap-6 pb-4">
+                {
+                  orders?.making?.map((el, index) => {
+                    return <OrderCard
+                      key={el.placedAt}
+                      order={el}
+                      onClickNext={onClickNext}
+                    />
+                  })
+                }
+              </div>
+            </div>
+
+            <div className="w-60 px-6 border border-gray-500">
+              <div className="text-center pb-8 font-bold">Ready</div>
+              <div className="flex  flex-col items-center gap-6 pb-4">
+                {
+                  orders?.ready?.map((el, index) => {
+                    return <OrderCard
+                      key={el.placedAt}
+                      order={el}
+                      onClickNext={onClickNext}
+                    />
+                  })
+                }
+              </div>
+            </div>
+
+            <div className="w-60 px-6 border border-gray-500">
+              <div className="text-center pb-8 font-bold">Picked</div>
+              <div className="flex  flex-col items-center gap-6 pb-4">
+                {
+                  orders?.picked?.map((el, index) => {
+                    return <OrderCard
+                      key={el.placedAt}
+                      order={el}
+                      onClickNext={onClickNext}
+                    />
+                  })
+                }
+              </div>
+            </div>
+
+          </div>
         }
       </div>
 
-      {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
-        No Order placed 
+      {totalOrders === 0 && <div className='flex justify-center text-2xl font-bold mt-[10%]'>
+        No Order placed
       </div>}
 
-      {totalOrders > 0 &&  orders &&
-          <div className="overflow-x-auto mt-16">
-              <OrderTable
-                  allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
-                  deliveredOrdersNo={orders ? orders.delivered.length : 0}
-                  onClickCancel={onClickCancel}
-              />
-          </div>
+      {totalOrders > 0 && orders &&
+        <div className="overflow-x-auto mt-16">
+          <OrderTable
+            allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
+            deliveredOrdersNo={orders ? orders.delivered.length : 0}
+            onClickCancel={onClickCancel}
+          />
+        </div>
       }
 
     </>
