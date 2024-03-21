@@ -4,7 +4,6 @@ import OrderCard from './components/orderCard';
 import OrderTable from './components/orderTable';
 import OrderForm from './components/orderForm';
 import { useSnackbar } from "notistack";
-import getTimeDifference from './utility/timeDiff';
 
 function App() {
   const { enqueueSnackbar } = useSnackbar();
@@ -199,87 +198,80 @@ function App() {
   return (
     <>
 
-       <div className='flex flex-col items-center'>
-
-        {/* <div className='flex flex-col items-center'>
-          <OrderForm
-            onSubmit={onSubmit}
-          />
-        </div> */}
-  
-        {totalOrders > 0 &&  orders &&  <div className='flex flex-col justify-center items-start '>
-          <div className='text-lg'>Pizza Stage Section</div>
-          
-          <div className="flex flex-row justify-center">
+      <div className='flex flex-col items-center'>
+        <OrderForm
+          onSubmit={onSubmit}
+        />
+      </div>
             
-            <div className="w-60 border border-gray-500">
-              <div className="text-center pb-8 font-bold">Placed</div>
-              <div className="flex  flex-col items-center gap-6  pb-4">
-                {
-                  orders?.placed?.map((el, index) => {
-                    return <OrderCard
+      <div className='flex flex-grow justify-center '>
+        {totalOrders > 0 &&  orders &&  
+            <div className="flex flex-row overflow-x-auto w-[70%]">
+              <div className="w-60 border border-gray-500">
+                <div className="text-center pb-8 font-bold">Placed</div>
+                <div className="flex  flex-col items-center gap-6  pb-4">
+                  {
+                    orders?.placed?.map((el, index) => {
+                      return <OrderCard
+                        key={el.placedAt}
+                        order={el}
+                        onClickNext={onClickNext}
+                      />
+                    })
+                  }
+                </div>
+              </div>
+
+              <div className="w-60 border border-gray-500">
+                <div className="text-center pb-8 font-bold">Making</div>
+                <div className="flex  flex-col items-center gap-6 pb-4">
+                  {
+                    orders?.making?.map((el, index) => {
+                      return <OrderCard
                       key={el.placedAt}
                       order={el}
-                      onClickNext={onClickNext}
-                    />
-                  })
-                }
+                        onClickNext={onClickNext}
+                      />
+                    })
+                  }
+                </div>
               </div>
-            </div>
 
-            <div className="w-60 border border-gray-500">
-              <div className="text-center pb-8 font-bold">Making</div>
-              <div className="flex  flex-col items-center gap-6 pb-4">
-                {
-                  orders?.making?.map((el, index) => {
-                    return <OrderCard
-                    key={el.placedAt}
-                    order={el}
-                      onClickNext={onClickNext}
-                    />
-                  })
-                }
+              <div className="w-60 border border-gray-500">
+                <div className="text-center pb-8 font-bold">Ready</div>
+                <div className="flex  flex-col items-center gap-6 pb-4">
+                  {
+                    orders?.ready?.map((el, index) => {
+                      return <OrderCard
+                      key={el.placedAt}
+                      order={el}
+                        onClickNext={onClickNext}
+                      />
+                    })
+                  }
+                </div>
               </div>
-            </div>
 
-            <div className="w-60 border border-gray-500">
-              <div className="text-center pb-8 font-bold">Ready</div>
-              <div className="flex  flex-col items-center gap-6 pb-4">
-                {
-                  orders?.ready?.map((el, index) => {
-                    return <OrderCard
-                    key={el.placedAt}
-                    order={el}
-                      onClickNext={onClickNext}
-                    />
-                  })
-                }
+              <div className="w-60 border border-gray-500">
+                <div className="text-center pb-8 font-bold">Picked</div>
+                <div className="flex  flex-col items-center gap-6 pb-4">
+                  {
+                    orders?.picked?.map((el, index) => {
+                      return <OrderCard
+                      key={el.placedAt}
+                      order={el}
+                        onClickNext={onClickNext}
+                      />
+                    })
+                  }
+                </div>
               </div>
+
             </div>
+        }
+      </div>
 
-            <div className="w-60 border border-gray-500">
-              <div className="text-center pb-8 font-bold">Picked</div>
-              <div className="flex  flex-col items-center gap-6 pb-4">
-                {
-                  orders?.picked?.map((el, index) => {
-                    return <OrderCard
-                    key={el.placedAt}
-                    order={el}
-                      onClickNext={onClickNext}
-                    />
-                  })
-                }
-              </div>
-            </div>
-
-          </div>
-
-        </div>}
-        
-      </div> 
-    
-
-      {/* {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
+      {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
         No Order placed 
       </div>}
 
@@ -291,7 +283,7 @@ function App() {
                   onClickCancel={onClickCancel}
               />
           </div>
-      } */}
+      }
 
     </>
 
