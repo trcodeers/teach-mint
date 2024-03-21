@@ -102,7 +102,7 @@ const OrderForm = (props) => {
 
                 <div>
                     <button
-                        className="bg-red-500 w-full text-center text-white py-2 px-2 rounded mt-6 "
+                        className="bg-blue-500 w-full text-center text-white py-2 px-2 rounded mt-6 "
                         type="submit"
                     >
                         Create Order
