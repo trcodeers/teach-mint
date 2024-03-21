@@ -90,14 +90,12 @@ function App() {
 
     
     const newOrderNo = existingItems ? (JSON.parse(existingItems).length + 1) : 1
-    console.log(data)
     const newOrder = {
       id: newOrderNo,
       status: 'placed',
       placedAt: Date.now(),
       ...data
     }
-    console.log(newOrder)
     
     const existingOrders = localStorage.getItem('orders')
     const updatedOrders = [newOrder, ...(existingOrders ? JSON.parse(existingOrders) : [])]
@@ -274,16 +272,17 @@ function App() {
           </div>
         </div>}
 
-        {totalOrders > 0 && <div className='flex flex-col items-start'>
+        {totalOrders > 0 &&  orders && <div className='flex flex-col items-start'>
           <div className='text-lg'>Main Section</div>
-          <div className="flex     mb-32"> 
-            {orders && <OrderTable
+          <div className="flex mb-32"> 
+            <OrderTable
               allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
               deliveredOrdersNo={orders ? orders.delivered.length : 0}
               onClickCancel={onClickCancel}
-            />}
+            />
           </div>
-        </div>}
+        </div>
+        }
         
         {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
           No Order placed 
