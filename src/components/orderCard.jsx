@@ -34,7 +34,7 @@ const OrderCard = (props) => {
     }
 
     return (
-        <div className={`w-44 h-36 border border-gray-500 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes >= 3 ? 'bg-red-400' : ''}`}>
+        <div className={`w-max-44 px-8 h-36 border border-gray-500 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes >= 3 ? 'bg-red-400' : ''}`}>
             <div>{id}</div>
             {timeDiffMessage && status !== 'picked' && <div>{timeDiffMessage?.minutes} min {timeDiffMessage?.seconds} sec</div>}
                 <div> 
