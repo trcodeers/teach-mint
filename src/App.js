@@ -59,6 +59,13 @@ function App() {
             picked: updatedPickedOrders
           }
         }
+        else if (status === 'delivered') {
+          const updatedDeliveredOrders = [updatedElement, ...orderFormat.delivered]
+          orderFormat = {
+            ...orderFormat,
+            delivered: updatedDeliveredOrders
+          }
+        }
       });
 
       
