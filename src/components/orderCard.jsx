@@ -7,6 +7,7 @@ const OrderCard = (props) => {
     const [timeDiffMessage, setTimeDiffMessage] = useState(null)
 
     useEffect(()=>{
+        console.log(order)
         const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
         setTimeDiffMessage({minutes, seconds})
     },[])
@@ -27,7 +28,7 @@ const OrderCard = (props) => {
     }
 
     return (
-        <div className={`w-44 h-36 border border-gray-500 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes > 3 ? 'bg-red-400' : ''}`}>
+        <div className={`w-44 h-36 border border-gray-500 flex flex-col justify-center text-center rounded-2xl ${timeDiffMessage?.minutes >= 3 ? 'bg-red-400' : ''}`}>
             <div>{id}</div>
             {status !== 'picked' && <div>{timeDiffMessage?.minutes} min {timeDiffMessage?.seconds} sec</div>}
                 <div> 
