@@ -20,10 +20,15 @@ const OrderForm = (props) => {
       });
     
 
+    const onFormSubmit = (data) =>{
+        onSubmit(data)
+        reset()
+    }
+
     return (
         <form
             className="bg-white rounded mb-4 p-6"
-            onSubmit={handleSubmit(() => {onSubmit(); reset()})}
+            onSubmit={handleSubmit(onFormSubmit)}
         >
             <div className='flex flex-row gap-9'>
 
