@@ -13,6 +13,10 @@ function App() {
   const [totalOrders, setTotalOrders] = useState(0)
 
   useEffect(() => {
+    updateOrdersUI()
+  }, [])
+
+  const updateOrdersUI = () =>{
     const existingOrders = localStorage.getItem('orders')
     let orderFormat = {
       placed: [],
@@ -28,50 +32,46 @@ function App() {
 
       parsedOrders.forEach(element => {
         const { status } = element
-        const timeDiff = getTimeDifference(element.placedAt, Date.now())
 
-        const updatedElement = { ...element, timeDiff }
         if (status === 'placed') {
-          const updatedPlacedOrders = [updatedElement, ...orderFormat.placed]
+          const updatedPlacedOrders = [element, ...orderFormat.placed]
           orderFormat = {
             ...orderFormat,
             placed: updatedPlacedOrders
           }
         }
         else if (status === 'making') {
-          const updatedMakingOrders = [updatedElement, ...orderFormat.making]
+          const updatedMakingOrders = [element, ...orderFormat.making]
           orderFormat = {
             ...orderFormat,
             making: updatedMakingOrders
           }
         }
         else if (status === 'ready') {
-          const updatedReadyOrders = [updatedElement, ...orderFormat.ready]
+          const updatedReadyOrders = [element, ...orderFormat.ready]
           orderFormat = {
             ...orderFormat,
             ready: updatedReadyOrders
           }
         }
         else if (status === 'picked') {
-          const updatedPickedOrders = [updatedElement, ...orderFormat.picked]
+          const updatedPickedOrders = [element, ...orderFormat.picked]
           orderFormat = {
             ...orderFormat,
             picked: updatedPickedOrders
           }
         }
         else if (status === 'delivered') {
-          const updatedDeliveredOrders = [updatedElement, ...orderFormat.delivered]
+          const updatedDeliveredOrders = [element, ...orderFormat.delivered]
           orderFormat = {
             ...orderFormat,
             delivered: updatedDeliveredOrders
           }
         }
-      });
-
-      
+      });     
     }
     setOrders({ ...orderFormat })
-  }, [])
+  }
 
   const onSubmit = (data) => {
     const limitingOrders = orders ? [...orders.placed, ...orders.making] : []
@@ -88,7 +88,6 @@ function App() {
     }
     const existingItems = localStorage.getItem('orders')
 
-    
     const newOrderNo = existingItems ? (JSON.parse(existingItems).length + 1) : 1
     const newOrder = {
       id: newOrderNo,
@@ -101,11 +100,8 @@ function App() {
     const updatedOrders = [newOrder, ...(existingOrders ? JSON.parse(existingOrders) : [])]
     localStorage.setItem('orders', (JSON.stringify([...updatedOrders])))
     setTotalOrders(updatedOrders.length)
-    // Set the local state
-    setOrders({
-      ...orders,
-      placed: [ newOrder, ...(orders ? orders.placed : []) ]
-    })
+    
+    updateOrdersUI()
 
     enqueueSnackbar("Order placed", {
       autoHideDuration: 1000,

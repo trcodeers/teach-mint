@@ -7,7 +7,7 @@ const OrderCard = (props) => {
     const [timeDiffMessage, setTimeDiffMessage] = useState(null)
 
     useEffect(()=>{
-        console.log(order)
+        // console.log(order)
         const { minutes, seconds } = getTimeDifference(order[`${status}At`], Date.now())
         setTimeDiffMessage({minutes, seconds})
     },[])
