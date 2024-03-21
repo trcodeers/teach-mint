@@ -18,7 +18,8 @@ function App() {
       placed: [],
       making: [],
       ready: [],
-      picked: []
+      picked: [],
+      delivered: []
     }
     if (existingOrders) {
 
@@ -67,6 +68,8 @@ function App() {
 
   const onSubmit = (data) => {
     const limitingOrders = orders ? [...orders.placed, ...orders.making] : []
+    
+    // IF Placed orders + making orders = 10, no more orders
     if((limitingOrders.length + 1) > 10){
       enqueueSnackbar("Not taking any order for now", {
         autoHideDuration: 1000,
@@ -80,12 +83,14 @@ function App() {
 
     
     const newOrderNo = existingItems ? (JSON.parse(existingItems).length + 1) : 1
+    console.log(data)
     const newOrder = {
       id: newOrderNo,
       status: 'placed',
       placedAt: Date.now(),
       ...data
     }
+    console.log(newOrder)
     
     const existingOrders = localStorage.getItem('orders')
     const updatedOrders = [newOrder, ...(existingOrders ? JSON.parse(existingOrders) : [])]
@@ -129,6 +134,14 @@ function App() {
         pickedAt: Date.now()
       }
       updateStatus(updatedOrder, 'ready', 'picked')
+    }
+    else{
+      const updatedOrder = {
+        ...order,
+        status: 'delivered',
+        pickedAt: Date.now()
+      }
+      updateStatus(updatedOrder, 'picked', 'delivered')
     }
  
   }
@@ -259,7 +272,7 @@ function App() {
           <div className="flex     mb-32"> 
             {orders && <OrderTable
               allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
-              deliveredOrdersNo={orders ? orders.picked.length : 0}
+              deliveredOrdersNo={orders ? orders.delivered.length : 0}
               onClickCancel={onClickCancel}
             />}
           </div>
