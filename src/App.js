@@ -199,7 +199,7 @@ function App() {
   return (
     <>
 
-      <div className='flex flex-col items-center'>
+       <div className='flex flex-col items-center'>
 
         <div className='flex flex-col items-center'>
           <OrderForm
@@ -271,24 +271,24 @@ function App() {
             </div>
           </div>
         </div>}
-
-        {totalOrders > 0 &&  orders && <div className='flex flex-col items-start'>
-          <div className='text-lg'>Main Section</div>
-          <div className="flex mb-32"> 
-            <OrderTable
-              allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
-              deliveredOrdersNo={orders ? orders.delivered.length : 0}
-              onClickCancel={onClickCancel}
-            />
-          </div>
-        </div>
-        }
         
-        {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
-          No Order placed 
-        </div>}
-      </div>
+      </div> 
     
+
+      {totalOrders === 0 && <div className='text-2xl font-bold mt-[10%]'>
+        No Order placed 
+      </div>}
+
+      {totalOrders > 0 &&  orders &&
+          <div class="overflow-x-auto mt-16">
+              <OrderTable
+                  allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
+                  deliveredOrdersNo={orders ? orders.delivered.length : 0}
+                  onClickCancel={onClickCancel}
+              />
+          </div>
+      }
+
     </>
 
   );
