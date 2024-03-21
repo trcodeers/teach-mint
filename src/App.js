@@ -277,7 +277,7 @@ function App() {
       </div>}
 
       {totalOrders > 0 &&  orders &&
-          <div class="overflow-x-auto mt-16">
+          <div className="overflow-x-auto mt-16">
               <OrderTable
                   allOrders={[...orders.placed, ...orders.making, ...orders.ready, ...orders.picked]}
                   deliveredOrdersNo={orders ? orders.delivered.length : 0}

@@ -92,7 +92,7 @@ const OrderForm = (props) => {
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                             {
                                 Pizza_Base.map((el, index) =>{
-                                    return   <option value={el.value}>{el.label}</option>
+                                    return   <option key={index} value={el.value}>{el.label}</option>
                                 })
                             }
                         </select>
