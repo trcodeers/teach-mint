@@ -1,13 +1,8 @@
-import getTimeDifference from "../utility/timeDiff"
+import TimeCountRow from "./timeCountRow"
 
 const OrderTable = (props) => {
 
     const { allOrders, deliveredOrdersNo, onClickCancel } = props
-
-    const getTimeDiffMessage = (startTime) =>{
-        const { minutes, seconds } = getTimeDifference(startTime, Date.now())
-        return `${minutes} min ${seconds} sec`
-    }
 
     return (
         <>
@@ -28,7 +23,11 @@ const OrderTable = (props) => {
                         return <tr key={index}>
                             <td className="px-4 py-2 border text-center">{el.id}</td>
                             <td className="px-4 py-2 border text-center">{el.status}</td>
-                            <td className="px-4 py-2 border text-center">{getTimeDiffMessage(el.placedAt)}</td>
+                            <td className="px-4 py-2 border text-center">
+                                <TimeCountRow
+                                    order={el}
+                                />
+                            </td>
                             <td className="px-4 py-2 border text-center">
                                 {(el.status !== 'ready' && el.status !== 'picked') && <button onClick={() => onClickCancel(el)} className="bg-red-600 hover:bg-red-500 text-white py-1 px-3 rounded inline-flex items-center">
                                     Cancel
